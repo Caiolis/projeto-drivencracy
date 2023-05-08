@@ -12,3 +12,13 @@ export async function postChoice(req, res) {
     res.status(500).send(err.message);
   }
 }
+
+export async function getChoice(req, res) {
+  const { id } = req.params;
+  try {
+    const choicesArray = await db.collection('choice').find({ pollId: new ObjectId(id) }).toArray();
+    return res.status(200).send(choicesArray);
+  } catch(err) {
+    res.status(500).send(err.message);
+  }
+};
