@@ -13,9 +13,18 @@ export async function createPoll(req, res) {
       sendableObject.expireAt = expire;
     }
 
-    await db.collection("polls").insertOne(sendableObject);
+    await db.collection("poll").insertOne(sendableObject);
     return res.status(201).send(sendableObject);
   } catch (err) {
     res.status(500).send(err.message);
   }
-}
+};
+
+export async function getPoll(req, res) {
+  try {
+    const polls = await db.collection('poll').find().toArray();
+    return res.send(polls);
+  } catch (err) {
+    res.status(500).send(err.message);
+  }
+};
