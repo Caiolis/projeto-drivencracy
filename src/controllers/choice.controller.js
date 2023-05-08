@@ -30,12 +30,10 @@ export async function getChoice(req, res) {
 export async function postVote(req, res) {
   const { id } = req.params;
 
-  const vote = await db
-    .collection("votes")
-    .insertOne({
-      timeStamp: dayjs().format("YYYY-MM-DD HH:mm"),
-      choiceId: new ObjectId(id),
-    });
+  await db.collection("votes").insertOne({
+    timeStamp: dayjs().format("YYYY-MM-DD HH:mm"),
+    choiceId: new ObjectId(id),
+  });
 
   res.sendStatus(201);
 }

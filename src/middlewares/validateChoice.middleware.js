@@ -35,7 +35,8 @@ export async function validateVote(req, res, next) {
     const existingChoice = await db
       .collection("choice")
       .findOne({ _id: new ObjectId(id) });
-    if (!existingChoice) return res.status(404).send("This choice does not exist");
+    if (!existingChoice)
+      return res.status(404).send("This choice does not exist");
 
     // Verify if the date has already expired
     if (dayjs().isAfter(existingChoice.expireAt, "day"))
@@ -51,9 +52,11 @@ export async function validateGetChoices(req, res, next) {
   const { id } = req.params;
   try {
     // Validate if the poll exists
-    const existingPoll = await db.collection("poll").findOne({ _id: new ObjectId(id) });
-    if(!existingPoll) return res.status(404).send("This poll does not exist")
-    
+    const existingPoll = await db
+      .collection("poll")
+      .findOne({ _id: new ObjectId(id) });
+    if (!existingPoll) return res.status(404).send("This poll does not exist");
+
     next();
   } catch (err) {
     res.status(500).send(err.message);
